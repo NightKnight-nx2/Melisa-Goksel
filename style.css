@@ -1,0 +1,453 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --purple-deep:   #1a0a2e;
+  --purple-mid:    #2d1b6e;
+  --purple-bright: #7c3aed;
+  --purple-glow:   #a855f7;
+  --purple-light:  #c084fc;
+  --purple-pale:   #e9d5ff;
+  --black:         #05020f;
+  --white:         #faf5ff;
+}
+
+html { scroll-behavior: auto; }
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Lato', sans-serif;
+  overflow-x: hidden;
+}
+
+.panel {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================================================
+   HERO
+============================================================ */
+#hero {
+  background: radial-gradient(ellipse at center, #1e0a3c 0%, #0d051a 60%, #05020f 100%);
+  flex-direction: column;
+}
+.hero-bg    { position: absolute; inset: 0; overflow: hidden; }
+.daisy-container { position: absolute; inset: 0; pointer-events: none; }
+.daisy      { position: absolute; transform-origin: 50% 100%; }
+
+.hero-content {
+  position: relative; z-index: 10;
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 1.5rem;
+}
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-weight: 700;
+  background: linear-gradient(135deg, #c084fc 0%, #e9d5ff 40%, #a855f7 70%, #7c3aed 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  letter-spacing: .02em;
+  filter: drop-shadow(0 0 30px rgba(168,85,247,.5));
+  opacity: 0;
+}
+.hero-subtitle {
+  font-size: clamp(.85rem, 2vw, 1.1rem);
+  color: var(--purple-light); letter-spacing: .3em; text-transform: uppercase; opacity: 0;
+}
+.scroll-hint {
+  position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: .5rem;
+  color: var(--purple-light); font-size: .75rem; letter-spacing: .2em;
+  text-transform: uppercase; opacity: 0;
+}
+.scroll-arrow {
+  width: 24px; height: 24px;
+  border-right: 2px solid var(--purple-glow); border-bottom: 2px solid var(--purple-glow);
+  transform: rotate(45deg);
+  animation: arrowBounce 1.5s ease-in-out infinite;
+}
+@keyframes arrowBounce {
+  0%,100% { transform: rotate(45deg) translateY(0); opacity: 1; }
+  50%      { transform: rotate(45deg) translateY(6px); opacity: .5; }
+}
+
+/* ============================================================
+   SPACE
+============================================================ */
+#space {
+  background: radial-gradient(ellipse at center, #0a0318 0%, #05020f 100%);
+  flex-direction: column; gap: 2.5rem;
+}
+.stars-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+
+.planets-row {
+  position: relative; z-index: 5;
+  display: flex; align-items: center; justify-content: center;
+  gap: clamp(2rem, 6vw, 6rem); flex-wrap: wrap;
+}
+
+/* Jupiter wrapper — orbit container lives inside */
+.jupiter-wrapper {
+  position: relative;
+  display: inline-block;
+  opacity: 0;
+  transform: scale(.3);
+  filter: drop-shadow(0 0 40px rgba(180,100,50,.4));
+}
+
+/* Pluto orbit */
+.pluto-orbit {
+  position: absolute;
+  /* centered at Jupiter SVG center (SVG is 260px) */
+  top:  130px;
+  left: 130px;
+  width: 0; height: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+.pluto-wrapper {
+  position: absolute;
+  left: 155px;   /* orbit radius */
+  top:  -15px;   /* slight vertical offset for tilt */
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  filter: drop-shadow(0 0 18px rgba(160,140,200,.4));
+}
+
+/* Shooting stars */
+.shooting-star {
+  position: absolute;
+  width: 140px; height: 2px;
+  background: linear-gradient(to left, transparent 0%, rgba(200,220,255,.8) 55%, white 100%);
+  border-radius: 1px;
+  pointer-events: none; z-index: 4; opacity: 0;
+  filter: drop-shadow(0 0 5px rgba(200,220,255,.9));
+}
+#shootingStar1 { top: 15%; right: 15%; transform: rotate(-30deg); }
+#shootingStar2 { top:  8%; right: 48%; width: 100px; transform: rotate(-28deg); }
+
+.space-quote {
+  position: relative; z-index: 5;
+  max-width: min(680px, 90vw); text-align: center;
+  font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: clamp(.95rem, 2.3vw, 1.3rem); color: var(--purple-pale);
+  line-height: 1.85; opacity: 0; transform: translateY(28px);
+  text-shadow: 0 0 20px rgba(168,85,247,.35);
+}
+
+/* ============================================================
+   BUBBLE OVERLAY  (fixed, z-index above all, pointer-events none)
+============================================================ */
+#bubbleOverlay {
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 200; overflow: hidden;
+}
+.bub {
+  position: absolute; bottom: -150px; border-radius: 50%;
+  border: 1.5px solid rgba(100,200,255,.3);
+  background: radial-gradient(circle at 30% 30%,
+    rgba(255,255,255,.22), rgba(80,180,255,.06));
+  transform: translateY(0); opacity: 0;
+}
+
+/* ============================================================
+   BIKINI BOTTOM
+============================================================ */
+#bikini {
+  background: linear-gradient(180deg,
+    #000e1f 0%, #001e3d 25%, #003166 55%, #0059a3 80%, #006ec4 100%);
+  flex-direction: column; align-items: center; justify-content: center;
+}
+.bikini-ocean-glow {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 60%, rgba(0,100,200,.2) 0%, transparent 70%);
+  pointer-events: none; z-index: 1;
+}
+.bikini-quote {
+  position: relative; z-index: 10;
+  max-width: min(640px, 90vw); text-align: center;
+  font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: clamp(.95rem, 2.3vw, 1.3rem); color: #cceeff;
+  line-height: 1.85; opacity: 0; transform: translateY(24px);
+  text-shadow: 0 2px 12px rgba(0,0,0,.5);
+  padding: 0 1rem; margin-bottom: 2rem;
+}
+/* Stretch image to full width, allow top to crop */
+.bikini-bottom-img {
+  position: absolute; bottom: 0; left: 0;
+  width: 100%; height: auto;
+  min-width: 100%; /* ensure no side gaps */
+  object-fit: fill;  /* stretch both axes — user approved */
+  object-position: bottom center;
+  z-index: 5; opacity: 0; display: block;
+}
+.ambient-bubble {
+  position: absolute; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.15);
+  background: rgba(255,255,255,.04);
+  animation: ambientRise linear infinite; z-index: 2;
+}
+@keyframes ambientRise {
+  0%   { transform: translateY(0) translateX(0); opacity: .6; }
+  100% { transform: translateY(-110vh) translateX(15px); opacity: 0; }
+}
+/* Jellyfish */
+.jellyfish {
+  position: absolute; z-index: 6;
+  pointer-events: none;
+  filter: drop-shadow(0 0 10px rgba(100,200,255,.5));
+  width: clamp(60px, 10vw, 130px); height: auto;
+}
+
+/* ============================================================
+   MADAGASCAR
+============================================================ */
+#madagascar {
+  background-image: url('assets/madagascar.jpg');
+  background-size: cover; background-position: center top;
+}
+.madagascar-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,.1) 0%, rgba(0,0,0,.04) 40%, rgba(0,0,0,.45) 100%);
+  z-index: 1;
+}
+.marty {
+  position: absolute; bottom: 12%; left: 0;
+  height: clamp(160px, 30vh, 320px); width: auto; z-index: 5;
+  filter: drop-shadow(4px 4px 8px rgba(0,0,0,.5));
+}
+.madagascar-quote {
+  position: absolute; top: 12%; left: 50%; transform: translateX(-50%);
+  z-index: 10; width: min(600px, 90vw); text-align: center;
+  font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: clamp(.95rem, 2.3vw, 1.3rem); color: #fff8e1;
+  line-height: 1.85; opacity: 0;
+  text-shadow: 0 2px 12px rgba(0,0,0,.7);
+  background: rgba(0,0,0,.35); padding: 1.2rem 2rem;
+  border-radius: 16px; border: 1px solid rgba(255,255,255,.15);
+  backdrop-filter: blur(4px);
+}
+
+/* ============================================================
+   CARS
+============================================================ */
+#cars {
+  background-image: url('assets/cars.jpg');
+  background-size: cover; background-position: center;
+}
+.cars-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,.2) 0%, rgba(0,0,0,.04) 50%, rgba(0,0,0,.5) 100%);
+  z-index: 1;
+}
+.road-stripe {
+  position: absolute; bottom: 20%; left: 0; right: 0; height: 6px;
+  background: repeating-linear-gradient(90deg, #ffd700 0px,#ffd700 60px, transparent 60px,transparent 100px);
+  z-index: 3; opacity: .6;
+}
+.lightning {
+  position: absolute; bottom: 21%; left: 0;
+  height: clamp(100px, 18vh, 180px); width: auto; z-index: 5;
+  filter: drop-shadow(4px 4px 12px rgba(0,0,0,.6));
+}
+.cars-quote {
+  position: absolute; top: 10%; left: 50%; transform: translateX(-50%);
+  z-index: 10; width: min(580px, 90vw); text-align: center;
+  font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: clamp(.95rem, 2.3vw, 1.3rem); color: #fff8e1;
+  line-height: 1.85; opacity: 0;
+  text-shadow: 0 2px 12px rgba(0,0,0,.7);
+  background: rgba(0,0,0,.4); padding: 1.2rem 2rem;
+  border-radius: 16px; border: 1px solid rgba(255,200,0,.2);
+  backdrop-filter: blur(4px);
+}
+
+/* ============================================================
+   DESSERT
+============================================================ */
+#dessert {
+  background: radial-gradient(ellipse at top, #2d0a5e 0%, #1a0638 50%, #0d0120 100%);
+  flex-direction: column; gap: 2rem;
+}
+.dessert-bg-glow {
+  position: absolute; width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(124,58,237,.2) 0%, transparent 70%);
+  border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  pointer-events: none;
+}
+.desserts-container {
+  position: relative; z-index: 5;
+  display: flex; align-items: center; justify-content: center;
+  gap: clamp(1rem, 4vw, 3rem); flex-wrap: wrap; padding: 0 2rem;
+}
+.dessert-item { opacity: 0; cursor: pointer; }
+.dessert-item:hover svg { filter: drop-shadow(0 0 20px rgba(200,100,255,.8)); }
+.dessert-quote {
+  position: relative; z-index: 5; max-width: min(650px, 90vw); text-align: center;
+  font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: clamp(.9rem, 2.2vw, 1.25rem); color: var(--purple-pale);
+  line-height: 1.8; opacity: 0; transform: translateY(30px);
+  text-shadow: 0 0 20px rgba(168,85,247,.4);
+}
+#sparklesContainer { position: absolute; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+
+/* ============================================================
+   MEMORIES — Özel Günler
+============================================================ */
+#memories {
+  background: radial-gradient(ellipse at center, #12042a 0%, #080118 60%, #03000f 100%);
+  flex-direction: column;
+  gap: clamp(1.5rem, 3vh, 2.5rem);
+  padding: 0 2rem;
+  overflow: hidden;
+}
+#memories .mem-stars-canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; opacity: .4;
+}
+.memories-heading {
+  position: relative; z-index: 5;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.2rem, 3vw, 2rem); font-weight: 700;
+  background: linear-gradient(135deg, #c084fc, #e9d5ff, #a855f7);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  text-align: center; letter-spacing: .05em;
+  filter: drop-shadow(0 0 16px rgba(168,85,247,.5));
+  opacity: 0; transform: translateY(-20px);
+}
+.memories-grid {
+  position: relative; z-index: 5;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(.8rem, 2vw, 1.8rem);
+  width: 100%; max-width: 1100px;
+}
+.mem-card {
+  background: rgba(45, 8, 100, .45);
+  border: 1px solid rgba(168,85,247,.3);
+  border-radius: 16px; padding: clamp(.9rem, 2vw, 1.4rem);
+  display: flex; flex-direction: column; align-items: center; gap: .6rem;
+  backdrop-filter: blur(8px);
+  opacity: 0; transform: translateY(40px);
+  transition: border-color .3s;
+}
+.mem-card:hover { border-color: rgba(168,85,247,.7); }
+
+.mem-date-badge {
+  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  color: white; font-size: clamp(.7rem, 1.2vw, .85rem);
+  font-weight: 700; letter-spacing: .08em;
+  padding: .25rem .9rem; border-radius: 999px;
+  white-space: nowrap;
+}
+.mem-icon {
+  font-size: clamp(1.8rem, 3vw, 2.5rem); line-height: 1;
+}
+.mem-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(.9rem, 1.6vw, 1.15rem); font-weight: 700;
+  color: var(--purple-pale); text-align: center; line-height: 1.3;
+}
+.mem-desc {
+  font-size: clamp(.72rem, 1.1vw, .88rem);
+  color: rgba(220,200,255,.75); text-align: center;
+  line-height: 1.6; flex: 1;
+}
+/* Photo placeholder */
+.mem-photo {
+  width: 100%; aspect-ratio: 4/3;
+  border: 2px dashed rgba(168,85,247,.4);
+  border-radius: 10px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: .4rem; color: rgba(168,85,247,.6);
+  font-size: .75rem; text-align: center;
+  background: rgba(100,50,200,.08);
+  overflow: hidden;
+}
+.mem-photo img {
+  width: 100%; height: 100%;
+  object-fit: cover; border-radius: 8px;
+  display: block;
+}
+.mem-photo-icon { font-size: 1.6rem; }
+
+/* Timeline connector line */
+.memories-grid::before {
+  content: '';
+  position: absolute;
+  top: 2.2rem; left: calc(33.33% / 2); right: calc(33.33% / 2);
+  height: 2px;
+  background: linear-gradient(90deg, rgba(168,85,247,.1), rgba(168,85,247,.6), rgba(168,85,247,.1));
+  z-index: -1;
+}
+
+/* ============================================================
+   BIRTHDAY
+============================================================ */
+#birthday { background: var(--black); flex-direction: column; gap: 2rem; }
+.birthday-glow {
+  position: absolute; width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(124,58,237,.35) 0%, transparent 70%);
+  border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  pointer-events: none; animation: glowPulse 3s ease-in-out infinite;
+}
+@keyframes glowPulse {
+  0%,100% { opacity:.6; transform:translate(-50%,-50%) scale(1); }
+  50%      { opacity:1;  transform:translate(-50%,-50%) scale(1.12); }
+}
+.birthday-content {
+  position: relative; z-index: 5; text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 1.8rem; opacity: 0;
+}
+.birthday-date {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1rem, 3vw, 1.5rem); color: var(--purple-light);
+  letter-spacing: .5em; text-transform: uppercase;
+}
+.birthday-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 5vw, 3.5rem); font-weight: 700;
+  background: linear-gradient(135deg, #c084fc, #e9d5ff, #a855f7);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  filter: drop-shadow(0 0 20px rgba(168,85,247,.6));
+}
+.birthday-message {
+  font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: clamp(1rem, 2.5vw, 1.4rem); color: var(--purple-pale);
+  line-height: 1.9; max-width: min(680px, 90vw);
+  text-shadow: 0 0 20px rgba(168,85,247,.3);
+}
+#confettiContainer { position: absolute; inset: 0; pointer-events: none; z-index: 2; overflow: hidden; }
+.confetti-piece { position: absolute; pointer-events: none; }
+#birthdayStars { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; opacity: .5; }
+#heartRow { display: flex; gap: 1rem; opacity: .7; }
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+@media (max-width: 700px) {
+  .jupiter-wrapper svg { width: 160px !important; height: 160px !important; }
+  .pluto-orbit { top: 80px; left: 80px; }
+  .pluto-wrapper { left: 100px; top: -10px; }
+  .pluto-wrapper svg { width: 65px !important; height: 65px !important; }
+  .marty     { height: clamp(110px, 22vw, 220px); }
+  .lightning { height: clamp(70px, 14vw, 140px); }
+  .madagascar-quote, .cars-quote { font-size: .88rem; padding: .9rem 1.2rem; top: 6%; }
+  .dessert-item svg { width: 75px !important; height: auto; }
+  .birthday-glow { width: 300px; height: 300px; }
+
+  /* Memories: single column on small screens */
+  .memories-grid { grid-template-columns: 1fr; max-width: 380px; }
+  .memories-grid::before { display: none; }
+}
+@media (max-width: 900px) and (min-width: 701px) {
+  .memories-grid { grid-template-columns: 1fr 1fr; max-width: 650px; }
+  .memories-grid::before { right: 50%; }
+}

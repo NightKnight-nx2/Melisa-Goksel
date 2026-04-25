@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Melisa Göksel ✨</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 1 · HERO
+════════════════════════════════════════════════════════════ -->
+<section id="hero" class="panel">
+  <div class="hero-bg">
+    <div class="daisy-container" id="daisyContainer"></div>
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(124,58,237,.12) 0%,transparent 70%);pointer-events:none;"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-subtitle" id="heroSub">Sana Özel Bir Sürpriz</div>
+    <h1 class="hero-title" id="heroTitle">Melisa Göksel</h1>
+  </div>
+  <div class="scroll-hint" id="scrollHint">
+    <span>Aşağı Kaydır</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 2 · UZAY — Jüpiter + Plüton (orbit)
+════════════════════════════════════════════════════════════ -->
+<section id="space" class="panel">
+  <canvas class="stars-canvas" id="starsCanvas"></canvas>
+  <div class="shooting-star" id="shootingStar1"></div>
+  <div class="shooting-star" id="shootingStar2"></div>
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(74,0,130,.22) 0%,transparent 70%);pointer-events:none;z-index:1;"></div>
+
+  <div class="planets-row">
+
+    <!-- Jüpiter — Plüton'un orbit container'ı içinde -->
+    <div class="jupiter-wrapper" id="jupiterWrapper">
+      <svg width="260" height="260" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="jup-body" cx="38%" cy="35%" r="65%">
+            <stop offset="0%"   stop-color="#f0d08a"/>
+            <stop offset="25%"  stop-color="#d4956a"/>
+            <stop offset="55%"  stop-color="#c47c50"/>
+            <stop offset="80%"  stop-color="#9b5e3a"/>
+            <stop offset="100%" stop-color="#6b3a20"/>
+          </radialGradient>
+          <radialGradient id="jup-glow" cx="50%" cy="50%" r="50%">
+            <stop offset="60%"  stop-color="transparent"/>
+            <stop offset="100%" stop-color="rgba(180,100,50,.3)"/>
+          </radialGradient>
+          <clipPath id="jup-clip"><ellipse cx="140" cy="140" rx="130" ry="130"/></clipPath>
+          <filter id="jup-blur"><feGaussianBlur stdDeviation="2"/></filter>
+        </defs>
+        <ellipse cx="140" cy="140" rx="138" ry="138" fill="none" stroke="rgba(210,150,80,.2)" stroke-width="8"/>
+        <ellipse cx="140" cy="140" rx="130" ry="130" fill="url(#jup-body)"/>
+        <g clip-path="url(#jup-clip)">
+          <rect x="10" y="60"  width="260" height="18" fill="rgba(139,80,40,.7)"   rx="9"/>
+          <rect x="10" y="82"  width="260" height="12" fill="rgba(200,160,100,.5)" rx="6"/>
+          <rect x="10" y="98"  width="260" height="22" fill="rgba(120,60,30,.6)"   rx="11"/>
+          <rect x="10" y="118" width="260" height="30" fill="rgba(160,80,40,.5)"   rx="15"/>
+          <ellipse cx="100" cy="133" rx="28" ry="14" fill="rgba(180,60,40,.85)" filter="url(#jup-blur)"/>
+          <ellipse cx="100" cy="133" rx="18" ry="9"  fill="rgba(210,80,50,.7)"/>
+          <rect x="10" y="148" width="260" height="18" fill="rgba(100,55,25,.55)"  rx="9"/>
+          <rect x="10" y="168" width="260" height="14" fill="rgba(200,155,90,.45)" rx="7"/>
+          <rect x="10" y="183" width="260" height="20" fill="rgba(130,70,35,.5)"   rx="10"/>
+          <rect x="10" y="206" width="260" height="14" fill="rgba(100,55,25,.4)"   rx="7"/>
+          <ellipse cx="95" cy="85" rx="50" ry="35" fill="rgba(255,240,200,.12)"/>
+        </g>
+        <ellipse cx="140" cy="140" rx="130" ry="130" fill="url(#jup-glow)"/>
+      </svg>
+
+      <!-- Plüton orbit container (pivot = Jüpiter merkezi = 130,130) -->
+      <div class="pluto-orbit" id="plutoOrbit">
+        <div class="pluto-wrapper" id="plutoWrapper">
+          <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="pluto-body" cx="38%" cy="32%" r="65%">
+                <stop offset="0%"   stop-color="#c8b8d8"/>
+                <stop offset="30%"  stop-color="#a08898"/>
+                <stop offset="65%"  stop-color="#7a5e6a"/>
+                <stop offset="100%" stop-color="#4a3848"/>
+              </radialGradient>
+              <radialGradient id="pluto-heart" cx="50%" cy="50%" r="50%">
+                <stop offset="0%"   stop-color="#e8d8c0"/>
+                <stop offset="100%" stop-color="#c8b090"/>
+              </radialGradient>
+              <clipPath id="pluto-clip"><circle cx="50" cy="50" r="46"/></clipPath>
+            </defs>
+            <circle cx="50" cy="50" r="48" fill="none" stroke="rgba(180,160,200,.15)" stroke-width="4"/>
+            <circle cx="50" cy="50" r="46" fill="url(#pluto-body)"/>
+            <g clip-path="url(#pluto-clip)">
+              <path d="M42,52 Q42,44 50,44 Q58,44 58,52 Q58,62 50,68 Q42,62 42,52Z"
+                    fill="url(#pluto-heart)" opacity=".85"/>
+              <circle cx="25" cy="36" r="5" fill="rgba(0,0,0,.12)"/>
+              <circle cx="25" cy="36" r="3" fill="rgba(0,0,0,.08)"/>
+              <circle cx="70" cy="60" r="4" fill="rgba(0,0,0,.1)"/>
+              <circle cx="35" cy="68" r="3" fill="rgba(0,0,0,.1)"/>
+              <circle cx="65" cy="30" r="3.5" fill="rgba(0,0,0,.09)"/>
+              <ellipse cx="36" cy="28" rx="14" ry="10" fill="rgba(255,255,255,.09)"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div><!-- /.jupiter-wrapper -->
+
+  </div><!-- /.planets-row -->
+
+  <p class="space-quote" id="spaceQuote">
+    "Plüton gezegen olmaktan çıkarıldığında bile<br> 
+    Güneş'in etrafında dönmeye devam etti.<br>
+    Jüpiter ise güzelliğiyle herkesi büyüledi.<br>
+    Hayatta her şey değişse de ben hep senin etrafında dönerim..."
+  </p>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     BUBBLE OVERLAY
+════════════════════════════════════════════════════════════ -->
+<div id="bubbleOverlay"></div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 3 · BİKİNİ KASABASI
+════════════════════════════════════════════════════════════ -->
+<section id="bikini" class="panel">
+  <div class="bikini-ocean-glow"></div>
+  <div id="ambientBubbles"></div>
+
+  <!-- Jellyfish (4 adet, JS ile hareket ettirilecek) -->
+  <img src="assets/Jellyfish.webp" class="jellyfish" id="jf1" alt=""/>
+  <img src="assets/Jellyfish.webp" class="jellyfish" id="jf2" alt=""/>
+  <img src="assets/Jellyfish.webp" class="jellyfish" id="jf3" alt=""/>
+  <img src="assets/Jellyfish.webp" class="jellyfish" id="jf4" alt=""/>
+
+  <p class="bikini-quote" id="bikiniQuote">
+    "Denizin en derin noktasında bile,<br>
+    sana olan her düşüncem mutlaka yüzeye çıkar..."
+  </p>
+
+  <img src="assets/bikinibottom.webp" alt="Bikini Kasabası" class="bikini-bottom-img" id="bikiniImg"/>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 4 · MADAGASCAR
+════════════════════════════════════════════════════════════ -->
+<section id="madagascar" class="panel">
+  <div class="madagascar-overlay"></div>
+  <p class="madagascar-quote" id="madagascarQuote">
+    "Marty gibi özgür olmak güzeldir<br>
+    ama en güzel özgürlük senin kollarının arasındadır."
+  </p>
+  <img src="assets/marty.png" alt="Marty" class="marty" id="marty"/>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 5 · CARS
+════════════════════════════════════════════════════════════ -->
+<section id="cars" class="panel">
+  <div class="cars-overlay"></div>
+  <div class="road-stripe"></div>
+  <p class="cars-quote" id="carsQuote">
+    "Yaşam bir yarış olsaydı bile beni yenmene izin verirdim.<br>
+    Kimin kazandığı değil, seninle geçen her an önemli çünkü..."
+  </p>
+  <img src="assets/lightning.png" alt="Lightning McQueen" class="lightning" id="lightning"/>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 6 · TATLI KRİZİ
+════════════════════════════════════════════════════════════ -->
+<section id="dessert" class="panel">
+  <div class="dessert-bg-glow"></div>
+  <div id="sparklesContainer"></div>
+
+  <div class="desserts-container" id="dessertsRow">
+    <!-- Layered Cake -->
+    <div class="dessert-item" id="dess1">
+      <svg width="110" height="140" viewBox="0 0 110 140" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="cake-bottom" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#c0392b"/><stop offset="100%" stop-color="#96281b"/></linearGradient>
+          <linearGradient id="cake-mid"    x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#8e44ad"/><stop offset="100%" stop-color="#6c3483"/></linearGradient>
+          <linearGradient id="cake-top"    x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#2c3e50"/><stop offset="100%" stop-color="#1a252f"/></linearGradient>
+        </defs>
+        <ellipse cx="55" cy="122" rx="50" ry="10" fill="#7d1f14" opacity=".5"/>
+        <rect x="10" y="95" width="90" height="32" rx="6" fill="url(#cake-bottom)"/>
+        <ellipse cx="55" cy="95" rx="45" ry="9" fill="#e74c3c"/>
+        <ellipse cx="55" cy="94" rx="45" ry="7" fill="white" opacity=".9"/>
+        <rect x="22" y="65" width="66" height="32" rx="5" fill="url(#cake-mid)"/>
+        <ellipse cx="55" cy="65" rx="33" ry="7" fill="#9b59b6"/>
+        <ellipse cx="55" cy="64" rx="33" ry="6" fill="white" opacity=".9"/>
+        <rect x="34" y="35" width="42" height="32" rx="5" fill="url(#cake-top)"/>
+        <ellipse cx="55" cy="35" rx="21" ry="6" fill="#34495e"/>
+        <path d="M18,95 Q22,105 20,112" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" opacity=".8"/>
+        <path d="M40,94 Q44,104 42,111" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" opacity=".8"/>
+        <path d="M70,94 Q74,104 72,111" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" opacity=".8"/>
+        <path d="M28,64 Q32,73 30,80"  fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>
+        <path d="M55,63 Q59,73 57,80"  fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>
+        <rect x="51" y="15" width="8" height="22" rx="4" fill="#f39c12"/>
+        <ellipse cx="55" cy="11" rx="5" ry="8" fill="#f1c40f"/>
+        <ellipse cx="55" cy="13" rx="3" ry="5" fill="#e74c3c"/>
+        <circle cx="30" cy="108" r="2" fill="#f1c40f"/>
+        <circle cx="50" cy="112" r="2" fill="#e74c3c"/>
+        <circle cx="75" cy="108" r="2" fill="#9b59b6"/>
+        <circle cx="42" cy="50"  r="1.5" fill="#e9d5ff"/>
+        <circle cx="65" cy="52"  r="1.5" fill="#f1c40f"/>
+      </svg>
+    </div>
+
+    <!-- Macarons -->
+    <div class="dessert-item" id="dess2">
+      <svg width="90" height="130" viewBox="0 0 90 130" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="45" cy="112" rx="38" ry="8" fill="#7c3aed" opacity=".4"/>
+        <ellipse cx="45" cy="108" rx="35" ry="7" fill="#9f7aea"/>
+        <rect x="12" y="100" width="66" height="10" rx="3" fill="#9f7aea"/>
+        <rect x="10" y="97"  width="70" height="5"  rx="4" fill="#c084fc"/>
+        <ellipse cx="45" cy="97" rx="35" ry="7" fill="#9f7aea"/>
+        <rect x="18" y="93" width="54" height="6" rx="3" fill="white" opacity=".9"/>
+        <ellipse cx="45" cy="93" rx="30" ry="7" fill="#f9a8d4"/>
+        <rect x="17" y="83" width="56" height="11" rx="3" fill="#f9a8d4"/>
+        <rect x="15" y="80" width="60" height="5"  rx="4" fill="#fce7f3"/>
+        <ellipse cx="45" cy="80" rx="30" ry="7" fill="#f9a8d4"/>
+        <rect x="22" y="77" width="46" height="5" rx="2.5" fill="white" opacity=".9"/>
+        <ellipse cx="45" cy="77" rx="25" ry="6" fill="#78350f"/>
+        <rect x="22" y="68" width="46" height="10" rx="3" fill="#78350f"/>
+        <rect x="20" y="65" width="50" height="5"  rx="4" fill="#92400e"/>
+        <ellipse cx="45" cy="65" rx="25" ry="6" fill="#78350f"/>
+        <rect x="26" y="62" width="38" height="5" rx="2.5" fill="#fef3c7" opacity=".9"/>
+        <ellipse cx="45" cy="62" rx="20" ry="5" fill="#7c3aed"/>
+        <rect x="27" y="53" width="36" height="10" rx="3" fill="#7c3aed"/>
+        <rect x="25" y="50" width="40" height="5"  rx="4" fill="#8b5cf6"/>
+        <ellipse cx="45" cy="50" rx="20" ry="5" fill="#7c3aed"/>
+      </svg>
+    </div>
+
+    <!-- Çikolatalı çilek -->
+    <div class="dessert-item" id="dess3">
+      <svg width="110" height="120" viewBox="0 0 110 120" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="choc-bg" cx="40%" cy="30%" r="70%">
+            <stop offset="0%"   stop-color="#5c2d08"/>
+            <stop offset="100%" stop-color="#2d1200"/>
+          </radialGradient>
+        </defs>
+        <ellipse cx="55" cy="115" rx="40" ry="8" fill="#1a0a00" opacity=".5"/>
+        <path d="M15,70 Q15,115 55,115 Q95,115 95,70 Z" fill="url(#choc-bg)"/>
+        <ellipse cx="55" cy="70" rx="40" ry="12" fill="#7a3e10"/>
+        <ellipse cx="55" cy="72" rx="33" ry="8"  fill="#3d1a00" opacity=".7"/>
+        <path d="M55,20 Q40,20 38,35 Q36,50 48,58 Q55,63 62,58 Q74,50 72,35 Q70,20 55,20 Z" fill="#e74c3c"/>
+        <path d="M55,20 Q46,24 44,35 Q42,45 50,54 Q53,57 55,57 Q55,57 55,20 Z" fill="#c0392b"/>
+        <ellipse cx="50" cy="36" rx="1.5" ry="2" fill="rgba(255,255,255,.4)" transform="rotate(-10,50,36)"/>
+        <ellipse cx="58" cy="32" rx="1.5" ry="2" fill="rgba(255,255,255,.4)" transform="rotate(5,58,32)"/>
+        <ellipse cx="62" cy="42" rx="1.5" ry="2" fill="rgba(255,255,255,.4)" transform="rotate(15,62,42)"/>
+        <path d="M55,20 Q58,12 62,8 Q58,14 65,10 Q60,16 55,20 Z" fill="#27ae60"/>
+        <path d="M55,20 Q52,12 48,8 Q52,14 45,10 Q50,16 55,20 Z" fill="#2ecc71"/>
+        <path d="M42,80 Q42,75 47,75 Q52,75 52,80 Q52,75 57,75 Q62,75 62,80 Q62,87 52,94 Q42,87 42,80 Z" fill="#9b2335" opacity=".8"/>
+        <path d="M20,72 Q18,85 22,100" fill="none" stroke="#6b3208" stroke-width="3" stroke-linecap="round" opacity=".6"/>
+        <path d="M88,72 Q90,85 86,100" fill="none" stroke="#6b3208" stroke-width="3" stroke-linecap="round" opacity=".6"/>
+      </svg>
+    </div>
+
+    <!-- Dondurma -->
+    <div class="dessert-item" id="dess4">
+      <svg width="90" height="140" viewBox="0 0 90 140" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="ic1" cx="40%" cy="30%" r="60%"><stop offset="0%" stop-color="#f8d7da"/><stop offset="100%" stop-color="#e8a0b0"/></radialGradient>
+          <radialGradient id="ic2" cx="40%" cy="30%" r="60%"><stop offset="0%" stop-color="#d4a0e0"/><stop offset="100%" stop-color="#9c4dbf"/></radialGradient>
+          <radialGradient id="ic3" cx="40%" cy="30%" r="60%"><stop offset="0%" stop-color="#f5d580"/><stop offset="100%" stop-color="#e0a020"/></radialGradient>
+        </defs>
+        <path d="M22,85 L15,135 L75,135 L68,85 Z" fill="rgba(200,200,255,.3)" stroke="rgba(150,150,255,.5)" stroke-width="1"/>
+        <ellipse cx="45" cy="85" rx="24" ry="6"  fill="rgba(200,200,255,.4)"/>
+        <ellipse cx="45" cy="80" rx="22" ry="12" fill="url(#ic3)"/>
+        <ellipse cx="45" cy="64" rx="20" ry="13" fill="url(#ic2)"/>
+        <ellipse cx="45" cy="48" rx="18" ry="14" fill="url(#ic1)"/>
+        <path d="M30,44 Q35,32 45,30 Q55,32 60,44" fill="white"/>
+        <path d="M36,40 Q40,28 45,26 Q50,28 54,40" fill="white"/>
+        <ellipse cx="45" cy="22" rx="5" ry="4" fill="white"/>
+        <circle cx="45" cy="17" r="5" fill="#c0392b"/>
+        <path d="M45,13 Q48,6 52,4" fill="none" stroke="#27ae60" stroke-width="2" stroke-linecap="round"/>
+        <path d="M35,50 Q33,58 35,68" fill="none" stroke="#5c2d08" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M55,48 Q57,56 55,66" fill="none" stroke="#5c2d08" stroke-width="2.5" stroke-linecap="round"/>
+        <rect x="32" y="52" width="6" height="2" rx="1" fill="#e74c3c" transform="rotate(30,32,52)"/>
+        <rect x="52" y="55" width="6" height="2" rx="1" fill="#3498db" transform="rotate(-20,52,55)"/>
+        <rect x="40" y="70" width="6" height="2" rx="1" fill="#f1c40f" transform="rotate(15,40,70)"/>
+        <rect x="57" y="42" width="6" height="30" rx="3" fill="#d4a017" transform="rotate(15,57,42)"/>
+      </svg>
+    </div>
+  </div>
+
+  <p class="dessert-quote" id="dessertQuote">
+    "En sevdiğin sütlü ve çikolatalı tatlılar bile<br>
+    senin yanına gelince biraz şekersiz kalıyor."
+  </p>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 7 · ÖZEL GÜNLER / ANLAR
+════════════════════════════════════════════════════════════ -->
+<section id="memories" class="panel">
+  <canvas class="mem-stars-canvas" id="memStarsCanvas"></canvas>
+
+  <h2 class="memories-heading" id="memoriesHeading">
+    Birlikte Yazdığımız Hikaye ✨
+  </h2>
+
+  <div class="memories-grid">
+
+    <!-- Kart 1: İlk Mesaj -->
+    <div class="mem-card" id="mem1">
+      <div class="mem-date-badge">15 Nisan 2026</div>
+      <div class="mem-icon">💬</div>
+      <div class="mem-title">İlk Mesaj</div>
+      <div class="mem-desc">
+        O gün Melisa'ya ilk mesajı attım.<br>
+        Küçük bir "şaka" — büyük bir başlangıç.
+      </div>
+      <div class="mem-photo" id="memPhoto1">
+        <img src="assets/mem1.png" alt="İlk Mesaj"/>
+      </div>
+    </div>
+
+    <!-- Kart 2: İlk Buluşma -->
+    <div class="mem-card" id="mem2">
+      <div class="mem-date-badge">20 Nisan 2026</div>
+      <div class="mem-icon">🌸</div>
+      <div class="mem-title">İlk Buluşma</div>
+      <div class="mem-desc">
+        İlk buluşmamızda, birlikte<br>
+        bir tarih yazacağımızı<br>
+        ikimiz de tahmin edemezdik.
+      </div>
+      <div class="mem-photo" id="memPhoto2">
+        <img src="assets/mem2.png" alt="İlk Buluşma"/>
+      </div>
+    </div>
+
+    <!-- Kart 3: İlk Öpücük & Sevgili -->
+    <div class="mem-card" id="mem3">
+      <div class="mem-date-badge">24 Nisan 2026</div>
+      <div class="mem-icon">💜</div>
+      <div class="mem-title">İlk Öpücük &amp; Sevgili Olduk</div>
+      <div class="mem-desc">
+        Önce köpek gezdirdik, sonra<br>
+        o bahçede çıkma teklifi ettim.<br>
+        İlk kez dudaklarımız buluştu. ♡
+      </div>
+      <div class="mem-photo" id="memPhoto3">
+        <img src="assets/mem3.png" alt="İlk Öpücük"/>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 8 · KAPANIŞ — 31 Mart
+════════════════════════════════════════════════════════════ -->
+<section id="birthday" class="panel">
+  <div class="birthday-glow"></div>
+  <div id="confettiContainer"></div>
+  <canvas id="birthdayStars"></canvas>
+
+  <div class="birthday-content" id="birthdayContent">
+    <div class="birthday-date">31 Mart</div>
+
+    <svg width="80" height="80" viewBox="0 0 80 80"
+         style="filter:drop-shadow(0 0 20px rgba(168,85,247,.8))">
+      <rect x="10" y="45" width="60" height="32" rx="8" fill="#4a1a8a"/>
+      <ellipse cx="40" cy="45" rx="30" ry="8" fill="#6b3aad"/>
+      <rect x="22" y="28" width="36" height="20" rx="5" fill="#7c3aed"/>
+      <ellipse cx="40" cy="28" rx="18" ry="6" fill="#9f5cf6"/>
+      <rect x="36" y="12" width="8"  height="18" rx="4" fill="#c084fc"/>
+      <ellipse cx="40" cy="10" rx="5" ry="8" fill="#fbbf24"/>
+      <ellipse cx="40" cy="12" rx="3" ry="5" fill="#f97316"/>
+      <path d="M18,44 Q20,52 18,58" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity=".7"/>
+      <path d="M38,43 Q40,51 38,57" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity=".7"/>
+      <path d="M58,44 Q60,52 58,58" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity=".7"/>
+      <circle cx="25" cy="58" r="2" fill="#f9a8d4"/>
+      <circle cx="50" cy="62" r="2" fill="#fbbf24"/>
+      <circle cx="60" cy="55" r="1.5" fill="#86efac"/>
+    </svg>
+
+    <h2 class="birthday-title">İyi ki Doğdun</h2>
+
+    <p class="birthday-message">
+      "İyi ki doğdun, iyi ki o 31 Mart gününü<br>
+      dünyadaki en özel tarihlerden biri yaptın.<br>
+      Seninle geçen her gün, her an benim için<br>
+      bir kutlama, bir şenlik, bir mucize gibi.<br>
+      İyi ki varsın, iyi ki benimlesin.<br>
+      Doğum günün kutlu olsun, Melisa'm! 🎉💜"<br>
+      p.s. bugün senin doğum günün değil ama<br> 
+      güneş hergün yeniden doğuyor,<br> 
+      tıpkı benim sana olan sevgim gibi.
+    </p>
+
+    <div id="heartRow">
+      <svg width="24" height="22" viewBox="0 0 24 22"><path d="M12,20 Q0,12 0,6 Q0,0 6,0 Q9,0 12,4 Q15,0 18,0 Q24,0 24,6 Q24,12 12,20Z" fill="#a855f7"/></svg>
+      <svg width="24" height="22" viewBox="0 0 24 22"><path d="M12,20 Q0,12 0,6 Q0,0 6,0 Q9,0 12,4 Q15,0 18,0 Q24,0 24,6 Q24,12 12,20Z" fill="#c084fc"/></svg>
+      <svg width="24" height="22" viewBox="0 0 24 22"><path d="M12,20 Q0,12 0,6 Q0,0 6,0 Q9,0 12,4 Q15,0 18,0 Q24,0 24,6 Q24,12 12,20Z" fill="#e9d5ff"/></svg>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
